@@ -2,20 +2,45 @@
     ViewData["Title"] = "Ingeniería Dashboard";
 }
 
-<div class="container mt-4 bg-ingenieria">
-    <h2 class="text-center mb-4">Bienvenido, Ingeniería</h2>
+<div class="container mt-5">
+    <h2 class="text-center text-success mb-4">
+        <i class="fas fa-microscope"></i> Bienvenido, Ingeniería
+    </h2>
 
-    <!-- Ribbon de navegación -->
-    <div class="d-flex justify-content-center bg-info p-3 rounded">
-        <a asp-controller="Cateter" asp-action="Index" class="btn btn-light mx-2">Catéter</a>
-        <a asp-controller="Pruebas" asp-action="Index" class="btn btn-light mx-2">Pruebas</a>
-        <a asp-controller="Documentos" asp-action="Index" class="btn btn-light mx-2">Documentos</a>
-        <a asp-controller="Alarmas" asp-action="Index" class="btn btn-light mx-2">Alarmas</a>
+    <div class="row justify-content-center g-4">
+        <div class="col-auto">
+            <a asp-controller="Cateter" asp-action="Index" class="custom-card-btn orange">
+                <i class="fas fa-syringe"></i>
+                <span>Catéter</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="Pruebas" asp-action="Index" class="custom-card-btn red">
+                <i class="fas fa-vial"></i>
+                <span>Pruebas</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="Documentos" asp-action="Index" class="custom-card-btn teal">
+                <i class="fas fa-file-medical"></i>
+                <span>Documentos</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="Alarmas" asp-action="Index" class="custom-card-btn navy">
+                <i class="fas fa-bell"></i>
+                <span>Alarmas</span>
+            </a>
+        </div>
     </div>
 
-    <div class="text-center mt-4">
+    <div class="text-center mt-5">
         <p>Has ingresado con éxito al panel de Ingeniería.</p>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Ir al Inicio</a>
-        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Cerrar Sesión</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-home"></i> Ir al Inicio
+        </a>
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
     </div>
 </div>

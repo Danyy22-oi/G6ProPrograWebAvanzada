@@ -1,8 +1,87 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - MedImplants</title>
+    <link rel="stylesheet" href="~/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        .icon-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-card i {
+            font-size: 28px;
+            color: #007acc;
+        }
+
+        .btn-primary {
+            background-color: #007acc;
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: #005c99;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><i class="fas fa-heartbeat"></i> MedImplants</h1>
+        <p>Soluciones médicas de alta calidad</p>
+    </header>
+
+    <nav>
+        <a href="#"><i class="fas fa-home"></i> Inicio</a>
+        <a href="#"><i class="fas fa-box-medical"></i> Productos</a>
+        <a href="#"><i class="fas fa-users"></i> Nosotros</a>
+        <a href="#"><i class="fas fa-envelope"></i> Contacto</a>
+    </nav>
+
+    <section>
+        <div class="icon-card">
+            <i class="fas fa-hospital-user"></i>
+            <div>
+                <h2>Bienvenidos a MedImplants</h2>
+                <p>Ofrecemos implementos médicos de alta precisión como catéteres, cánulas y soluciones quirúrgicas para clínicas y hospitales.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h3><i class="fas fa-star"></i> Nuestros Productos Estrella</h3>
+        <ul>
+            <li><i class="fas fa-syringe"></i> Catéter Venoso Central</li>
+            <li><i class="fas fa-stethoscope"></i> Catéter de Hemodiálisis</li>
+            <li><i class="fas fa-briefcase-medical"></i> Jeringas estériles</li>
+            <li><i class="fas fa-pump-medical"></i> Sistemas de infusión intravenosa</li>
+        </ul>
+    </section>
+
+    <section class="card">
+        <h3><i class="fas fa-check-circle"></i> ¿Por qué elegirnos?</h3>
+        <p>Más de 15 años proveyendo a centros médicos en Costa Rica. Certificaciones internacionales y atención personalizada.</p>
+        <button class="btn-primary"><i class="fas fa-phone-volume"></i> Contáctanos</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 MedImplants S.A. | Todos los derechos reservados</p>
+    </footer>
+
+</body>
+</html>

@@ -1,48 +1,37 @@
 ﻿@model Proyecto.Models.Alarmas
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de la Alarma";
 }
 
-<h1>Details</h1>
+<div class="form-wrapper">
+    <h2 class="text-center mb-4 text-danger"><i class="fas fa-bell"></i> Detalles de la Alarma</h2>
 
-<div>
-    <h4>Alarmas</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tipo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Investigacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Investigacion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Pruebas)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Pruebas.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="form-card">
+        <dl class="row">
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Tipo)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Tipo)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Fecha)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Fecha)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Estado)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Estado)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Investigacion)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Investigacion)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Pruebas)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Pruebas.Id)</dd>
+        </dl>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Editar
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver a la lista
+            </a>
+        </div>
+    </div>
 </div>

@@ -9,12 +9,37 @@
     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Proyecto_Final.styles.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css2?family=Frutiger&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+
 </head>
 <body>
+    <!-- Botón hamburguesa -->
+    <button id="sidebarToggle" class="hamburger-btn fixed-hamburger">
+        <i class="fas fa-bars"></i>
+    </button>
+
+
+    <!-- Sidebar -->
+    <div id="sidebarMenu" class="sidebar">
+        <h4 class="text-center my-4">Menú</h4>
+        <ul class="nav flex-column px-3">
+            <li class="nav-item mb-2"><a asp-controller="Home" asp-action="Index" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+            <li class="nav-item mb-2"><a asp-controller="Cateter" asp-action="Index" class="nav-link"><i class="fas fa-syringe"></i> Catéter</a></li>
+            <li class="nav-item mb-2"><a asp-controller="Pruebas" asp-action="Index" class="nav-link"><i class="fas fa-vial"></i> Pruebas</a></li>
+            <li class="nav-item mb-2"><a asp-controller="Documentos" asp-action="Index" class="nav-link"><i class="fas fa-file-medical"></i> Documentos</a></li>
+            <li class="nav-item mb-2"><a asp-controller="Correcciones" asp-action="Index" class="nav-link"><i class="fas fa-tools"></i> Correcciones</a></li>
+            <li class="nav-item mb-2"><a asp-controller="InformacionDepartamento" asp-action="Index" class="nav-link"><i class="fas fa-hospital"></i> Departamento</a></li>
+            <li class="nav-item mt-4"><a asp-controller="Account" asp-action="Logout" class="btn btn-danger w-100">Cerrar Sesión</a></li>
+        </ul>
+    </div>
+
+        </div>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Proyecto_Final</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Medics</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,9 +49,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                      
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -47,6 +70,23 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+        <script>
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebarMenu = document.getElementById('sidebarMenu');
+
+            sidebarToggle.addEventListener('click', () => {
+                sidebarMenu.classList.toggle('show');
+            });
+
+            // Cierra el menú cuando se hace clic en un enlace del menú
+            const sidebarLinks = sidebarMenu.querySelectorAll('.nav-link');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    sidebarMenu.classList.remove('show');
+                });
+            });
+        </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

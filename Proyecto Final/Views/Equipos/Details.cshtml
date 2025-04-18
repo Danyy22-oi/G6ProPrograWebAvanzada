@@ -1,60 +1,43 @@
 ﻿@model Proyecto.Models.Equipos
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles del Equipo";
 }
 
-<h1>Details</h1>
+<div class="form-wrapper">
+    <h2 class="text-center mb-4 text-primary"><i class="fas fa-eye"></i> Detalles del Equipo</h2>
 
-<div>
-    <h4>Equipos</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaMantenimientoPreventivo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaMantenimientoPreventivo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaCalibracion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaCalibracion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cantidad)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ubicacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ubicacion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Departamentos)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Departamentos.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EstadoEquipos)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EstadoEquipos.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="form-card">
+        <dl class="row">
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nombre)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Nombre)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.FechaMantenimientoPreventivo)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.FechaMantenimientoPreventivo)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.FechaCalibracion)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.FechaCalibracion)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Cantidad)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Cantidad)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Ubicacion)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Ubicacion)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Departamentos)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Departamentos.Id)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.EstadoEquipos)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.EstadoEquipos.Id)</dd>
+        </dl>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Editar
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver a la lista
+            </a>
+        </div>
+    </div>
 </div>

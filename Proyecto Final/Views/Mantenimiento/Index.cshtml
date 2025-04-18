@@ -2,18 +2,33 @@
     ViewData["Title"] = "Mantenimiento Dashboard";
 }
 
-<div class="container mt-4 bg-mantenimiento">
-    <h2 class="text-center mb-4">Bienvenido, Mantenimiento</h2>
+<div class="container mt-5">
+    <h2 class="text-center text-info mb-4">
+        <i class="fas fa-tools"></i> Bienvenido, Mantenimiento
+    </h2>
 
-    <!-- Ribbon de navegación -->
-    <div class="d-flex justify-content-center bg-info p-3 rounded">
-        <a asp-controller="Equipos" asp-action="Index" class="btn btn-light mx-2">Equipos</a>
-        <a asp-controller="EstadoEquipos" asp-action="Index" class="btn btn-light mx-2">Estado Equipos</a>
+    <div class="row justify-content-center g-4">
+        <div class="col-auto">
+            <a asp-controller="Equipos" asp-action="Index" class="custom-card-btn orange">
+                <i class="fas fa-cogs"></i>
+                <span>Equipos</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="EstadoEquipos" asp-action="Index" class="custom-card-btn navy">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Estado Equipos</span>
+            </a>
+        </div>
     </div>
 
-    <div class="text-center mt-4">
+    <div class="text-center mt-5">
         <p>Has ingresado con éxito al panel de Mantenimiento.</p>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Ir al Inicio</a>
-        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Cerrar Sesión</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-home"></i> Ir al Inicio
+        </a>
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
     </div>
 </div>

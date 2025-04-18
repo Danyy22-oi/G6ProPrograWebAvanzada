@@ -1,36 +1,35 @@
 ﻿@model Proyecto.Models.Correcciones
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de Corrección";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Correcciones</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Pruebas)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Pruebas.Id)
-        </dd>
-    </dl>
+<div class="text-center mt-4">
+    <h2 class="text-primary">
+        <i class="fas fa-tools text-warning"></i> Detalles de Corrección
+    </h2>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="d-flex justify-content-center mt-4">
+    <div class="card shadow-sm p-4" style="width: 600px; border-radius: 15px;">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-end fw-semibold">Descripcion</dt>
+            <dd class="col-sm-8 text-start">@Html.DisplayFor(model => model.Descripcion)</dd>
+
+            <dt class="col-sm-4 text-end fw-semibold">Fecha</dt>
+            <dd class="col-sm-8 text-start">@Html.DisplayFor(model => model.Fecha)</dd>
+
+            <dt class="col-sm-4 text-end fw-semibold">Pruebas</dt>
+            <dd class="col-sm-8 text-start">@Html.DisplayFor(model => model.Pruebas.Id)</dd>
+        </dl>
+
+        <div class="text-center mt-4">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-2">
+                <i class="fas fa-pen"></i> Editar
+            </a>
+            <a asp-action="Index" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> Volver a la lista
+            </a>
+        </div>
+    </div>
 </div>
