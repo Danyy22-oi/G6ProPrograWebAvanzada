@@ -1,67 +1,69 @@
 ﻿@model Proyecto.Models.Pruebas
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Prueba";
 }
 
-<h1>Create</h1>
+<div class="form-wrapper">
+    <h2 class="text-center mb-4"><i class="fas fa-vial text-primary"></i> Registrar Prueba</h2>
 
-<h4>Pruebas</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
-                <span asp-validation-for="Fecha" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PresionBalloon" class="control-label"></label>
-                <input asp-for="PresionBalloon" class="form-control" />
-                <span asp-validation-for="PresionBalloon" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="InspeccionTactil" /> @Html.DisplayNameFor(model => model.InspeccionTactil)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="RupturaBalloon" class="control-label"></label>
-                <input asp-for="RupturaBalloon" class="form-control" />
-                <span asp-validation-for="RupturaBalloon" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Desinflado" class="control-label"></label>
-                <input asp-for="Desinflado" class="form-control" />
-                <span asp-validation-for="Desinflado" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="CateterId" class="control-label"></label>
-                <select asp-for="CateterId" class ="form-control" asp-items="ViewBag.CateterId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+    <form asp-action="Create" class="form-card">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+        <div class="mb-3">
+            <label asp-for="Descripcion" class="form-label"></label>
+            <input asp-for="Descripcion" class="form-control" />
+            <span asp-validation-for="Descripcion" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Fecha" class="form-label"></label>
+            <input asp-for="Fecha" class="form-control" />
+            <span asp-validation-for="Fecha" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PresionBalloon" class="form-label"></label>
+            <input asp-for="PresionBalloon" class="form-control" />
+            <span asp-validation-for="PresionBalloon" class="text-danger small"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" asp-for="InspeccionTactil" />
+            <label class="form-check-label" asp-for="InspeccionTactil"></label>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="RupturaBalloon" class="form-label"></label>
+            <input asp-for="RupturaBalloon" class="form-control" />
+            <span asp-validation-for="RupturaBalloon" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Desinflado" class="form-label"></label>
+            <input asp-for="Desinflado" class="form-control" />
+            <span asp-validation-for="Desinflado" class="text-danger small"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" asp-for="Estado" />
+            <label class="form-check-label" asp-for="Estado"></label>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CateterId" class="form-label"></label>
+            <select asp-for="CateterId" class="form-control" asp-items="ViewBag.CateterId"></select>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-create"><i class="fas fa-plus-circle"></i> Crear Prueba</button>
+            <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -1,77 +1,52 @@
 ﻿@model IEnumerable<Proyecto.Models.Pruebas>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "PruebasIndex";
 }
 
-<h1>Index</h1>
+<h2><i class="fas fa-vial text-primary"></i> Pruebas Realizadas</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-create">
+        <i class="fas fa-plus-circle"></i> Nueva Prueba
+    </a>
 </p>
-<table class="table">
+
+<table class="table table-rounded">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PresionBalloon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InspeccionTactil)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RupturaBalloon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Desinflado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cateter)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+            <th>@Html.DisplayNameFor(model => model.Fecha)</th>
+            <th>@Html.DisplayNameFor(model => model.PresionBalloon)</th>
+            <th>@Html.DisplayNameFor(model => model.InspeccionTactil)</th>
+            <th>@Html.DisplayNameFor(model => model.RupturaBalloon)</th>
+            <th>@Html.DisplayNameFor(model => model.Desinflado)</th>
+            <th>@Html.DisplayNameFor(model => model.Estado)</th>
+            <th>@Html.DisplayNameFor(model => model.Cateter)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PresionBalloon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InspeccionTactil)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RupturaBalloon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Desinflado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cateter.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Fecha)</td>
+                <td>@Html.DisplayFor(modelItem => item.PresionBalloon)</td>
+                <td>@Html.DisplayFor(modelItem => item.InspeccionTactil)</td>
+                <td>@Html.DisplayFor(modelItem => item.RupturaBalloon)</td>
+                <td>@Html.DisplayFor(modelItem => item.Desinflado)</td>
+                <td>@Html.DisplayFor(modelItem => item.Estado)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cateter.Id)</td>
+                <td class="text-center">
+                    <div class="d-flex justify-content-center gap-2">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="action-btn">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="action-btn">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="action-btn">Eliminar</a>
+                    </div>
+                </td>
+
+            </tr>
+        }
     </tbody>
 </table>
