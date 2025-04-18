@@ -655,6 +655,7 @@ button, .btn {
         background-color: #007bff;
         color: white;
     }
+<<<<<<< HEAD
 .custom-card-btn {
     display: flex;
     flex-direction: column;
@@ -844,3 +845,5 @@ button, .btn {
     .action-btn:hover {
         background-color: #d4d4d4;
     }
+=======
+>>>>>>> 91db6089ccc299d21eb68b592b623eab012cf8a4
