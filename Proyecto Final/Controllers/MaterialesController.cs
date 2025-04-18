@@ -1,157 +1,102 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Proyecto.Models;
-using Proyecto_Final.Data;
+using Proyecto.Services.Interfaces;
 
 namespace Proyecto.Controllers
 {
     public class MaterialesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMaterialesService _materialesService;
 
-        public MaterialesController(ApplicationDbContext context)
+        public MaterialesController(IMaterialesService materialesService)
         {
-            _context = context;
+            _materialesService = materialesService;
         }
 
-        // GET: Materiales
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Materiales.ToListAsync());
+            var lista = await _materialesService.ObtenerTodosAsync();
+            return View(lista);
         }
 
-        // GET: Materiales/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var materiales = await _context.Materiales
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (materiales == null)
-            {
-                return NotFound();
-            }
+            var material = await _materialesService.ObtenerPorIdAsync(id.Value);
+            if (material == null) return NotFound();
 
-            return View(materiales);
+            return View(material);
         }
 
-        // GET: Materiales/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Materiales/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Cantidad,Descripcion")] Materiales materiales)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Cantidad,Descripcion")] Materiales material)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(materiales);
-                await _context.SaveChangesAsync();
+                await _materialesService.CrearAsync(material);
                 return RedirectToAction(nameof(Index));
             }
-            return View(materiales);
+            return View(material);
         }
 
-        // GET: Materiales/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var materiales = await _context.Materiales.FindAsync(id);
-            if (materiales == null)
-            {
-                return NotFound();
-            }
-            return View(materiales);
+            var material = await _materialesService.ObtenerPorIdAsync(id.Value);
+            if (material == null) return NotFound();
+
+            return View(material);
         }
 
-        // POST: Materiales/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Cantidad,Descripcion")] Materiales materiales)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Cantidad,Descripcion")] Materiales material)
         {
-            if (id != materiales.Id)
-            {
-                return NotFound();
-            }
+            if (id != material.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(materiales);
-                    await _context.SaveChangesAsync();
+                    await _materialesService.ActualizarAsync(material);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch
                 {
-                    if (!MaterialesExists(materiales.Id))
-                    {
+                    if (!await _materialesService.ExisteAsync(material.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(materiales);
+            return View(material);
         }
 
-        // GET: Materiales/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var materiales = await _context.Materiales
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (materiales == null)
-            {
-                return NotFound();
-            }
+            var material = await _materialesService.ObtenerPorIdAsync(id.Value);
+            if (material == null) return NotFound();
 
-            return View(materiales);
+            return View(material);
         }
 
-        // POST: Materiales/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var materiales = await _context.Materiales.FindAsync(id);
-            if (materiales != null)
-            {
-                _context.Materiales.Remove(materiales);
-            }
-
-            await _context.SaveChangesAsync();
+            await _materialesService.EliminarAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool MaterialesExists(int id)
-        {
-            return _context.Materiales.Any(e => e.Id == id);
         }
     }
 }

@@ -1,157 +1,102 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Proyecto.Models;
-using Proyecto_Final.Data;
+using Proyecto.Services.Interfaces;
 
 namespace Proyecto.Controllers
 {
     public class SuministrosController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ISuministrosService _suministrosService;
 
-        public SuministrosController(ApplicationDbContext context)
+        public SuministrosController(ISuministrosService suministrosService)
         {
-            _context = context;
+            _suministrosService = suministrosService;
         }
 
-        // GET: Suministros
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Suministros.ToListAsync());
+            var lista = await _suministrosService.ObtenerTodosAsync();
+            return View(lista);
         }
 
-        // GET: Suministros/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var suministros = await _context.Suministros
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (suministros == null)
-            {
-                return NotFound();
-            }
+            var suministro = await _suministrosService.ObtenerPorIdAsync(id.Value);
+            if (suministro == null) return NotFound();
 
-            return View(suministros);
+            return View(suministro);
         }
 
-        // GET: Suministros/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Suministros/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Cantidad,Descripcion")] Suministros suministros)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Cantidad,Descripcion")] Suministros suministro)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(suministros);
-                await _context.SaveChangesAsync();
+                await _suministrosService.CrearAsync(suministro);
                 return RedirectToAction(nameof(Index));
             }
-            return View(suministros);
+            return View(suministro);
         }
 
-        // GET: Suministros/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var suministros = await _context.Suministros.FindAsync(id);
-            if (suministros == null)
-            {
-                return NotFound();
-            }
-            return View(suministros);
+            var suministro = await _suministrosService.ObtenerPorIdAsync(id.Value);
+            if (suministro == null) return NotFound();
+
+            return View(suministro);
         }
 
-        // POST: Suministros/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Cantidad,Descripcion")] Suministros suministros)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Cantidad,Descripcion")] Suministros suministro)
         {
-            if (id != suministros.Id)
-            {
-                return NotFound();
-            }
+            if (id != suministro.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(suministros);
-                    await _context.SaveChangesAsync();
+                    await _suministrosService.ActualizarAsync(suministro);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch
                 {
-                    if (!SuministrosExists(suministros.Id))
-                    {
+                    if (!await _suministrosService.ExisteAsync(suministro.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(suministros);
+            return View(suministro);
         }
 
-        // GET: Suministros/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var suministros = await _context.Suministros
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (suministros == null)
-            {
-                return NotFound();
-            }
+            var suministro = await _suministrosService.ObtenerPorIdAsync(id.Value);
+            if (suministro == null) return NotFound();
 
-            return View(suministros);
+            return View(suministro);
         }
 
-        // POST: Suministros/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var suministros = await _context.Suministros.FindAsync(id);
-            if (suministros != null)
-            {
-                _context.Suministros.Remove(suministros);
-            }
-
-            await _context.SaveChangesAsync();
+            await _suministrosService.EliminarAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool SuministrosExists(int id)
-        {
-            return _context.Suministros.Any(e => e.Id == id);
         }
     }
 }

@@ -29,6 +29,11 @@ builder.Services.AddScoped<ICateterService, CateterService>();
 builder.Services.AddScoped<ICorreccionesService, CorreccionesService>();
 builder.Services.AddScoped<IDepartamentoService, DepartamentoService>();
 builder.Services.AddScoped<IPruebaService, PruebaService>();
+builder.Services.AddScoped<ISuministrosService, SuministrosService>();
+builder.Services.AddScoped<IProveedorService, ProveedorService>();
+builder.Services.AddScoped<IMaterialesService, MaterialesService>();
+builder.Services.AddScoped<IEstadoEquiposService, EstadoEquiposService>();
+builder.Services.AddScoped<IEstadoEquiposService, EstadoEquiposService>();
 
 
 //Aqui se configuran las rutas de acceso:

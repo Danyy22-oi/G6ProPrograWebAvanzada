@@ -1,170 +1,121 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Proyecto.Models;
-using Proyecto_Final.Data;
+using Proyecto.Services.Interfaces;
 
 namespace Proyecto.Controllers
 {
     public class EquiposController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IEquiposService _equiposService;
+        private readonly IDepartamentoService _departamentoService;
+        private readonly IEstadoEquiposService _estadoEquiposService;
 
-        public EquiposController(ApplicationDbContext context)
+        public EquiposController(
+            IEquiposService equiposService,
+            IDepartamentoService departamentoService,
+            IEstadoEquiposService estadoEquiposService)
         {
-            _context = context;
+            _equiposService = equiposService;
+            _departamentoService = departamentoService;
+            _estadoEquiposService = estadoEquiposService;
         }
 
-        // GET: Equipos
         public async Task<IActionResult> Index()
         {
-            var pAWContext = _context.Equipos.Include(e => e.Departamentos).Include(e => e.EstadoEquipos);
-            return View(await pAWContext.ToListAsync());
+            var lista = await _equiposService.ObtenerTodosAsync();
+            return View(lista);
         }
 
-        // GET: Equipos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var equipos = await _context.Equipos
-                .Include(e => e.Departamentos)
-                .Include(e => e.EstadoEquipos)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (equipos == null)
-            {
-                return NotFound();
-            }
+            var equipo = await _equiposService.ObtenerPorIdAsync(id.Value);
+            if (equipo == null) return NotFound();
 
-            return View(equipos);
+            return View(equipo);
         }
 
-        // GET: Equipos/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Id", "Id");
-            ViewData["EstadoEquipoId"] = new SelectList(_context.EstadoEquipos, "Id", "Id");
+            await CargarCombosAsync();
             return View();
         }
 
-        // POST: Equipos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,FechaMantenimientoPreventivo,FechaCalibracion,Cantidad,Ubicacion,DepartamentoId,EstadoEquipoId")] Equipos equipos)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,FechaMantenimientoPreventivo,FechaCalibracion,Cantidad,Ubicacion,DepartamentoId,EstadoEquipoId")] Equipos equipo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(equipos);
-                await _context.SaveChangesAsync();
+                await _equiposService.CrearAsync(equipo);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Id", "Id", equipos.DepartamentoId);
-            ViewData["EstadoEquipoId"] = new SelectList(_context.EstadoEquipos, "Id", "Id", equipos.EstadoEquipoId);
-            return View(equipos);
+            await CargarCombosAsync(equipo.DepartamentoId, equipo.EstadoEquipoId);
+            return View(equipo);
         }
 
-        // GET: Equipos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var equipos = await _context.Equipos.FindAsync(id);
-            if (equipos == null)
-            {
-                return NotFound();
-            }
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Id", "Id", equipos.DepartamentoId);
-            ViewData["EstadoEquipoId"] = new SelectList(_context.EstadoEquipos, "Id", "Id", equipos.EstadoEquipoId);
-            return View(equipos);
+            var equipo = await _equiposService.ObtenerPorIdSimpleAsync(id.Value);
+            if (equipo == null) return NotFound();
+
+            await CargarCombosAsync(equipo.DepartamentoId, equipo.EstadoEquipoId);
+            return View(equipo);
         }
 
-        // POST: Equipos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,FechaMantenimientoPreventivo,FechaCalibracion,Cantidad,Ubicacion,DepartamentoId,EstadoEquipoId")] Equipos equipos)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,FechaMantenimientoPreventivo,FechaCalibracion,Cantidad,Ubicacion,DepartamentoId,EstadoEquipoId")] Equipos equipo)
         {
-            if (id != equipos.Id)
-            {
-                return NotFound();
-            }
+            if (id != equipo.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(equipos);
-                    await _context.SaveChangesAsync();
+                    await _equiposService.ActualizarAsync(equipo);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch
                 {
-                    if (!EquiposExists(equipos.Id))
-                    {
+                    if (!await _equiposService.ExisteAsync(equipo.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Id", "Id", equipos.DepartamentoId);
-            ViewData["EstadoEquipoId"] = new SelectList(_context.EstadoEquipos, "Id", "Id", equipos.EstadoEquipoId);
-            return View(equipos);
+
+            await CargarCombosAsync(equipo.DepartamentoId, equipo.EstadoEquipoId);
+            return View(equipo);
         }
 
-        // GET: Equipos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var equipos = await _context.Equipos
-                .Include(e => e.Departamentos)
-                .Include(e => e.EstadoEquipos)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (equipos == null)
-            {
-                return NotFound();
-            }
+            var equipo = await _equiposService.ObtenerPorIdAsync(id.Value);
+            if (equipo == null) return NotFound();
 
-            return View(equipos);
+            return View(equipo);
         }
 
-        // POST: Equipos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var equipos = await _context.Equipos.FindAsync(id);
-            if (equipos != null)
-            {
-                _context.Equipos.Remove(equipos);
-            }
-
-            await _context.SaveChangesAsync();
+            await _equiposService.EliminarAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EquiposExists(int id)
+        private async Task CargarCombosAsync(int? departamentoId = null, int? estadoId = null)
         {
-            return _context.Equipos.Any(e => e.Id == id);
+            ViewData["DepartamentoId"] = new SelectList(await _departamentoService.ObtenerTodosAsync(), "Id", "Id", departamentoId);
+            ViewData["EstadoEquipoId"] = new SelectList(await _estadoEquiposService.ObtenerTodosAsync(), "Id", "Id", estadoId);
         }
     }
 }
