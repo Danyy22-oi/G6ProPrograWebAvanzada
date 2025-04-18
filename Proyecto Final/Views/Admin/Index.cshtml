@@ -1,24 +1,64 @@
 ﻿@{
-    ViewData["Title"] = "Panel de Administrador";
+    ViewData["Title"] = "Administrador Dashboard";
 }
 
-<div class="container mt-4 bg-admin">
-    <h1 class="text-center mb-4">Bienvenido, Administrador</h1>
+<div class="container mt-5">
+    <h2 class="text-center text-dark mb-4">
+        <i class="fas fa-user-cog"></i> Bienvenido, Administrador
+    </h2>
 
-    <!-- Ribbon de navegación -->
-    <div class="d-flex justify-content-center bg-primary p-3 rounded">
-        <a asp-controller="Cateter" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Catéter</a>
-        <a asp-controller="Pruebas" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Pruebas</a>
-        <a asp-controller="Proveedor" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Proveedor</a>
-        <a asp-controller="Materiales" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Materiales</a>
-        <a asp-controller="Suministros" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Suministros</a>
-        <a asp-controller="Documentos" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Documentos</a>
-        <a asp-controller="Usuarios" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Usuarios</a>
+    <div class="row justify-content-center g-4">
+        <div class="col-auto">
+            <a asp-controller="Cateter" asp-action="Index" class="custom-card-btn orange">
+                <i class="fas fa-syringe"></i>
+                <span>Catéter</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="Pruebas" asp-action="Index" class="custom-card-btn red">
+                <i class="fas fa-vial"></i>
+                <span>Pruebas</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="Proveedor" asp-action="Index" class="custom-card-btn green">
+                <i class="fas fa-truck"></i>
+                <span>Proveedor</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="Materiales" asp-action="Index" class="custom-card-btn blue">
+                <i class="fas fa-boxes"></i>
+                <span>Materiales</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="Suministros" asp-action="Index" class="custom-card-btn purple">
+                <i class="fas fa-dolly-flatbed"></i>
+                <span>Suministros</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="Documentos" asp-action="Index" class="custom-card-btn teal">
+                <i class="fas fa-file-alt"></i>
+                <span>Documentos</span>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a asp-controller="Usuarios" asp-action="Index" class="custom-card-btn dark">
+                <i class="fas fa-users-cog"></i>
+                <span>Usuarios</span>
+            </a>
+        </div>
     </div>
 
-    <div class="text-center mt-4">
+    <div class="text-center mt-5">
         <p>Has ingresado con éxito al panel de administración.</p>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary btn-custom">Ir al Inicio</a>
-        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger btn-custom">Cerrar Sesión</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-home"></i> Ir al Inicio
+        </a>
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
     </div>
 </div>

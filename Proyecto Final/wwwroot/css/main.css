@@ -845,5 +845,58 @@ button, .btn {
     .action-btn:hover {
         background-color: #d4d4d4;
     }
-=======
->>>>>>> 91db6089ccc299d21eb68b592b623eab012cf8a4
+======= > > > > > > > 91db6089ccc299d21eb68b592b623eab012cf8a4
+.custom-card-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    height: 120px;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+.custom-card-btn i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Colores */
+.orange {
+    background-color: #f39c12;
+}
+
+.red {
+    background-color: #e74c3c;
+}
+
+.green {
+    background-color: #27ae60;
+}
+
+.blue {
+    background-color: #3498db;
+}
+
+.teal {
+    background-color: #1abc9c;
+}
+
+.purple {
+    background-color: #9b59b6;
+}
+
+.dark {
+    background-color: #34495e;
+}
+
+.custom-card-btn:hover {
+    transform: scale(1.05);
+    text-decoration: none;
+    color: #fff;
+}
