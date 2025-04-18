@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Panel de Administrador";
+}
+
+<div class="container mt-4 bg-admin">
+    <h1 class="text-center mb-4">Bienvenido, Administrador</h1>
+
+    <!-- Ribbon de navegación -->
+    <div class="d-flex justify-content-center bg-primary p-3 rounded">
+        <a asp-controller="Cateter" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Catéter</a>
+        <a asp-controller="Pruebas" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Pruebas</a>
+        <a asp-controller="Proveedor" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Proveedor</a>
+        <a asp-controller="Materiales" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Materiales</a>
+        <a asp-controller="Suministros" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Suministros</a>
+        <a asp-controller="Documentos" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Documentos</a>
+        <a asp-controller="Usuarios" asp-action="Index" class="btn btn-light mx-2 ribbon-btn">Usuarios</a>
+    </div>
+
+    <div class="text-center mt-4">
+        <p>Has ingresado con éxito al panel de administración.</p>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary btn-custom">Ir al Inicio</a>
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger btn-custom">Cerrar Sesión</a>
+    </div>
+</div>

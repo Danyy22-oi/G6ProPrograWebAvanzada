@@ -1,0 +1,49 @@
+﻿/* _Site.css o un archivo separado para el diseño */
+
+body {
+    font-family: 'Frutiger', sans-serif; /* O 'Roboto', si prefieres */
+}
+
+.bg-admin {
+    background-color: #1E3A8A; /* Azul para Admin */
+}
+
+.bg-ingenieria {
+    background-color: #10B981; /* Verde para Ingeniería */
+}
+
+.bg-mantenimiento {
+    background-color: #38BDF8; /* Celeste para Mantenimiento */
+}
+
+.bg-supervisor {
+    background-color: #EF4444; /* Rojo para Supervisor */
+}
+
+.bg-tecnicocalidad {
+    background-color: #F59E0B; /* Amarillo para Técnico de Calidad */
+}
+
+/* Diseño del Ribbon de Navegación */
+.ribbon-btn {
+    background-color: #ffffff;
+    border-radius: 5px;
+    color: #333333;
+}
+
+    .ribbon-btn:hover {
+        background-color: #e0e0e0;
+    }
+
+/* Estilo para los botones */
+.btn-custom {
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.bg-dark-gray {
+    background-color: #333;
+    color: #fff;
+}

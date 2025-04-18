@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Ingeniería Dashboard";
+}
+
+<div class="container mt-4 bg-ingenieria">
+    <h2 class="text-center mb-4">Bienvenido, Ingeniería</h2>
+
+    <!-- Ribbon de navegación -->
+    <div class="d-flex justify-content-center bg-info p-3 rounded">
+        <a asp-controller="Cateter" asp-action="Index" class="btn btn-light mx-2">Catéter</a>
+        <a asp-controller="Pruebas" asp-action="Index" class="btn btn-light mx-2">Pruebas</a>
+        <a asp-controller="Documentos" asp-action="Index" class="btn btn-light mx-2">Documentos</a>
+        <a asp-controller="Alarmas" asp-action="Index" class="btn btn-light mx-2">Alarmas</a>
+    </div>
+
+    <div class="text-center mt-4">
+        <p>Has ingresado con éxito al panel de Ingeniería.</p>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Ir al Inicio</a>
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Cerrar Sesión</a>
+    </div>
+</div>
