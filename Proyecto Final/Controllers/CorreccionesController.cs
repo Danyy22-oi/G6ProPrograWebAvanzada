@@ -1,218 +1,147 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Proyecto.Models;
-using Proyecto_Final.Data;
+using Proyecto.Services.Interfaces;
 
 namespace Proyecto.Controllers
 {
     public class CorreccionesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICorreccionesService _correccionesService;
+        private readonly IPruebaService _pruebaService;
 
-        public CorreccionesController(ApplicationDbContext context)
+        public CorreccionesController(ICorreccionesService correccionesService, IPruebaService pruebaService)
         {
-            _context = context;
+            _correccionesService = correccionesService;
+            _pruebaService = pruebaService;
         }
 
-        // GET: Correcciones
         public async Task<IActionResult> Index()
         {
-            var pAWContext = _context.Correcciones.Include(c => c.Pruebas);
-            return View(await pAWContext.ToListAsync());
+            var lista = await _correccionesService.ObtenerTodasAsync();
+            return View(lista);
         }
 
-        // GET: Correcciones
         public async Task<IActionResult> IndexTec()
         {
-            var pAWContext = _context.Correcciones.Include(c => c.Pruebas);
-            return View(await pAWContext.ToListAsync());
+            var lista = await _correccionesService.ObtenerTodasAsync();
+            return View(lista);
         }
 
-        // GET: Correcciones/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var correcciones = await _context.Correcciones
-                .Include(c => c.Pruebas)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (correcciones == null)
-            {
-                return NotFound();
-            }
+            var correccion = await _correccionesService.ObtenerPorIdAsync(id.Value);
+            if (correccion == null) return NotFound();
 
-            return View(correcciones);
+            return View(correccion);
         }
 
-        // GET: Correcciones/Details/5
         public async Task<IActionResult> DetailsTec(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var correcciones = await _context.Correcciones
-                .Include(c => c.Pruebas)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (correcciones == null)
-            {
-                return NotFound();
-            }
+            var correccion = await _correccionesService.ObtenerPorIdAsync(id.Value);
+            if (correccion == null) return NotFound();
 
-            return View(correcciones);
+            return View(correccion);
         }
 
-        // GET: Correcciones/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id");
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id");
             return View();
         }
 
-        // POST: Correcciones/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Descripcion,Fecha,PruebaId")] Correcciones correcciones)
+        public async Task<IActionResult> Create([Bind("Id,Descripcion,Fecha,PruebaId")] Correcciones correccion)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(correcciones);
-                await _context.SaveChangesAsync();
+                await _correccionesService.CrearAsync(correccion);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id", correcciones.PruebaId);
-            return View(correcciones);
+
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id", correccion.PruebaId);
+            return View(correccion);
         }
 
-
-        // GET: Correcciones/Create
-        public IActionResult CreateTec()
+        public async Task<IActionResult> CreateTec()
         {
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id");
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id");
             return View();
         }
 
-        // POST: Correcciones/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateTec([Bind("Id,Descripcion,Fecha,PruebaId")] Correcciones correcciones)
+        public async Task<IActionResult> CreateTec([Bind("Id,Descripcion,Fecha,PruebaId")] Correcciones correccion)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(correcciones);
-                await _context.SaveChangesAsync();
+                await _correccionesService.CrearAsync(correccion);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id", correcciones.PruebaId);
-            return View(correcciones);
+
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id", correccion.PruebaId);
+            return View(correccion);
         }
 
-
-        // GET: Correcciones/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var correcciones = await _context.Correcciones.FindAsync(id);
-            if (correcciones == null)
-            {
-                return NotFound();
-            }
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id", correcciones.PruebaId);
-            return View(correcciones);
+            var correccion = await _correccionesService.ObtenerPorIdAsync(id.Value);
+            if (correccion == null) return NotFound();
+
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id", correccion.PruebaId);
+            return View(correccion);
         }
 
-
-
-        // POST: Correcciones/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion,Fecha,PruebaId")] Correcciones correcciones)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion,Fecha,PruebaId")] Correcciones correccion)
         {
-            if (id != correcciones.Id)
-            {
-                return NotFound();
-            }
+            if (id != correccion.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(correcciones);
-                    await _context.SaveChangesAsync();
+                    await _correccionesService.ActualizarAsync(correccion);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch
                 {
-                    if (!CorreccionesExists(correcciones.Id))
-                    {
+                    if (!await _correccionesService.ExisteAsync(correccion.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id", correcciones.PruebaId);
-            return View(correcciones);
+
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id", correccion.PruebaId);
+            return View(correccion);
         }
 
-        // GET: Correcciones/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var correcciones = await _context.Correcciones
-                .Include(c => c.Pruebas)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (correcciones == null)
-            {
-                return NotFound();
-            }
+            var correccion = await _correccionesService.ObtenerPorIdAsync(id.Value);
+            if (correccion == null) return NotFound();
 
-            return View(correcciones);
+            return View(correccion);
         }
 
-        // POST: Correcciones/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var correcciones = await _context.Correcciones.FindAsync(id);
-            if (correcciones != null)
-            {
-                _context.Correcciones.Remove(correcciones);
-            }
-
-            await _context.SaveChangesAsync();
+            await _correccionesService.EliminarAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool CorreccionesExists(int id)
-        {
-            return _context.Correcciones.Any(e => e.Id == id);
         }
     }
 }

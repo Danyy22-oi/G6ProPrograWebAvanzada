@@ -1,157 +1,103 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Proyecto.Models;
-using Proyecto_Final.Data;
+using Proyecto.Services.Interfaces;
 
 namespace Proyecto.Controllers
 {
     public class DepartamentosController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IDepartamentoService _departamentoService;
 
-        public DepartamentosController(ApplicationDbContext context)
+        public DepartamentosController(IDepartamentoService departamentoService)
         {
-            _context = context;
+            _departamentoService = departamentoService;
         }
 
-        // GET: Departamento
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Departamentos.ToListAsync());
+            var departamentos = await _departamentoService.ObtenerTodosAsync();
+            return View(departamentos);
         }
 
-        // GET: Departamento/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var departamento = await _context.Departamentos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (departamento == null)
-            {
-                return NotFound();
-            }
+            var departamento = await _departamentoService.ObtenerPorIdAsync(id.Value);
+            if (departamento == null) return NotFound();
 
             return View(departamento);
         }
 
-        // GET: Departamento/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Departamento/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Supervisor,Area")] Departamentos departamento)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(departamento);
-                await _context.SaveChangesAsync();
+                await _departamentoService.CrearAsync(departamento);
                 return RedirectToAction(nameof(Index));
             }
             return View(departamento);
         }
 
-        // GET: Departamento/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var departamento = await _context.Departamentos.FindAsync(id);
-            if (departamento == null)
-            {
-                return NotFound();
-            }
+            var departamento = await _departamentoService.ObtenerPorIdAsync(id.Value);
+            if (departamento == null) return NotFound();
+
             return View(departamento);
         }
 
-        // POST: Departamento/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Supervisor,Area")] Departamentos departamento)
         {
-            if (id != departamento.Id)
-            {
-                return NotFound();
-            }
+            if (id != departamento.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(departamento);
-                    await _context.SaveChangesAsync();
+                    await _departamentoService.ActualizarAsync(departamento);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch
                 {
-                    if (!DepartamentoExists(departamento.Id))
-                    {
+                    if (!await _departamentoService.ExisteAsync(departamento.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(departamento);
         }
 
-        // GET: Departamento/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var departamento = await _context.Departamentos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (departamento == null)
-            {
-                return NotFound();
-            }
+            var departamento = await _departamentoService.ObtenerPorIdAsync(id.Value);
+            if (departamento == null) return NotFound();
 
             return View(departamento);
         }
 
-        // POST: Departamento/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var departamento = await _context.Departamentos.FindAsync(id);
-            if (departamento != null)
-            {
-                _context.Departamentos.Remove(departamento);
-            }
-
-            await _context.SaveChangesAsync();
+            await _departamentoService.EliminarAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool DepartamentoExists(int id)
-        {
-            return _context.Departamentos.Any(e => e.Id == id);
         }
     }
 }

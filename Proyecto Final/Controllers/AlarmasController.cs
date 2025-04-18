@@ -1,222 +1,145 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Proyecto.Models;
-using Proyecto_Final.Data;
+using Proyecto.Services.Interfaces;
 
 namespace Proyecto.Controllers
 {
     public class AlarmasController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAlarmaService _alarmaService;
+        private readonly IPruebaService _pruebaService;
 
-        public AlarmasController(ApplicationDbContext context)
+        public AlarmasController(IAlarmaService alarmaService, IPruebaService pruebaService)
         {
-            _context = context;
+            _alarmaService = alarmaService;
+            _pruebaService = pruebaService;
         }
 
-        // GET: Alarmas
         public async Task<IActionResult> Index()
         {
-            var pAWContext = _context.Alarmas.Include(a => a.Pruebas);
-            return View(await pAWContext.ToListAsync());
+            var alarmas = await _alarmaService.ObtenerTodasAsync();
+            return View(alarmas);
         }
 
         public async Task<IActionResult> IndexTec()
         {
-            var pAWContext = _context.Alarmas.Include(a => a.Pruebas);
-            return View(await pAWContext.ToListAsync());
+            var alarmas = await _alarmaService.ObtenerTodasAsync();
+            return View(alarmas);
         }
 
-        // GET: Alarmas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var alarmas = await _context.Alarmas
-                .Include(a => a.Pruebas)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (alarmas == null)
-            {
-                return NotFound();
-            }
+            var alarma = await _alarmaService.ObtenerPorIdAsync(id.Value);
+            if (alarma == null) return NotFound();
 
-
-            return View(alarmas);
+            return View(alarma);
         }
 
-
-        // GET: Alarmas/Details/5
         public async Task<IActionResult> DetailsTec(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var alarmas = await _context.Alarmas
-                .Include(a => a.Pruebas)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (alarmas == null)
-            {
-                return NotFound();
-            }
+            var alarma = await _alarmaService.ObtenerPorIdAsync(id.Value);
+            if (alarma == null) return NotFound();
 
-
-            return View(alarmas);
+            return View(alarma);
         }
 
-
-
-
-        // GET: Alarmas/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id");
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id");
             return View();
         }
 
-        // POST: Alarmas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Tipo,Fecha,Estado,Investigacion,PruebaId")] Alarmas alarmas)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(alarmas);
-                await _context.SaveChangesAsync();
+                await _alarmaService.CrearAsync(alarmas);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id", alarmas.PruebaId);
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id", alarmas.PruebaId);
             return View(alarmas);
         }
 
-
-        // GET: Alarmas/Create
-        public IActionResult CreateTec()
+        public async Task<IActionResult> CreateTec()
         {
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id");
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id");
             return View();
         }
 
-        // POST: Alarmas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateTec([Bind("Id,Tipo,Fecha,Estado,Investigacion,PruebaId")] Alarmas alarmas)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(alarmas);
-                await _context.SaveChangesAsync();
+                await _alarmaService.CrearAsync(alarmas);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id", alarmas.PruebaId);
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id", alarmas.PruebaId);
             return View(alarmas);
         }
 
-
-
-        // GET: Alarmas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var alarmas = await _context.Alarmas.FindAsync(id);
-            if (alarmas == null)
-            {
-                return NotFound();
-            }
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id", alarmas.PruebaId);
-            return View(alarmas);
+            var alarma = await _alarmaService.ObtenerPorIdAsync(id.Value);
+            if (alarma == null) return NotFound();
+
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id", alarma.PruebaId);
+            return View(alarma);
         }
 
-        // POST: Alarmas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Fecha,Estado,Investigacion,PruebaId")] Alarmas alarmas)
         {
-            if (id != alarmas.Id)
-            {
-                return NotFound();
-            }
+            if (id != alarmas.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(alarmas);
-                    await _context.SaveChangesAsync();
+                    await _alarmaService.ActualizarAsync(alarmas);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch
                 {
-                    if (!AlarmasExists(alarmas.Id))
-                    {
+                    if (!_alarmaService.Existe(alarmas.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PruebaId"] = new SelectList(_context.Pruebas, "Id", "Id", alarmas.PruebaId);
+
+            ViewData["PruebaId"] = new SelectList(await _pruebaService.ObtenerTodasAsync(), "Id", "Id", alarmas.PruebaId);
             return View(alarmas);
         }
 
-        // GET: Alarmas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var alarmas = await _context.Alarmas
-                .Include(a => a.Pruebas)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (alarmas == null)
-            {
-                return NotFound();
-            }
+            var alarma = await _alarmaService.ObtenerPorIdAsync(id.Value);
+            if (alarma == null) return NotFound();
 
-            return View(alarmas);
+            return View(alarma);
         }
 
-        // POST: Alarmas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var alarmas = await _context.Alarmas.FindAsync(id);
-            if (alarmas != null)
-            {
-                _context.Alarmas.Remove(alarmas);
-            }
-
-            await _context.SaveChangesAsync();
+            await _alarmaService.EliminarAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool AlarmasExists(int id)
-        {
-            return _context.Alarmas.Any(e => e.Id == id);
         }
     }
 }

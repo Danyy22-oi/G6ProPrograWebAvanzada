@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Proyecto.Services.Interfaces;
+using Proyecto.Services;
 using Proyecto_Final.Data;
 using Proyecto_Final.Models;
 
@@ -20,6 +22,14 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+//inyeccion de dependencias 
+builder.Services.AddScoped<IAlarmaService, AlarmaService>();
+builder.Services.AddScoped<ICateterService, CateterService>();
+builder.Services.AddScoped<ICorreccionesService, CorreccionesService>();
+builder.Services.AddScoped<IDepartamentoService, DepartamentoService>();
+builder.Services.AddScoped<IPruebaService, PruebaService>();
+
 
 //Aqui se configuran las rutas de acceso:
 builder.Services.ConfigureApplicationCookie(options =>

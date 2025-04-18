@@ -1,271 +1,184 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Proyecto.Models;
-using Proyecto_Final.Data;
+using Proyecto.Services.Interfaces;
 
 namespace Proyecto.Controllers
 {
     public class PruebasController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IPruebaService _pruebaService;
+        private readonly ICateterService _cateterService;
 
-        public PruebasController(ApplicationDbContext context)
+        public PruebasController(IPruebaService pruebaService, ICateterService cateterService)
         {
-            _context = context;
+            _pruebaService = pruebaService;
+            _cateterService = cateterService;
         }
 
-        // GET: Pruebas
         public async Task<IActionResult> Index()
         {
-            var pAWContext = _context.Pruebas.Include(p => p.Cateter);
-            return View(await pAWContext.ToListAsync());
+            var pruebas = await _pruebaService.ObtenerTodasAsync();
+            return View(pruebas);
         }
 
-        // GET: Pruebas
         public async Task<IActionResult> IndexTec()
         {
-            var pAWContext = _context.Pruebas.Include(p => p.Cateter);
-            return View(await pAWContext.ToListAsync());
+            var pruebas = await _pruebaService.ObtenerTodasAsync();
+            return View(pruebas);
         }
 
-        // GET: Pruebas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var pruebas = await _context.Pruebas
-                .Include(p => p.Cateter)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (pruebas == null)
-            {
-                return NotFound();
-            }
+            var prueba = await _pruebaService.ObtenerPorIdAsync(id.Value);
+            if (prueba == null) return NotFound();
 
-            return View(pruebas);
+            return View(prueba);
         }
 
-        // GET: Pruebas/Details/5
         public async Task<IActionResult> DetailsTec(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var pruebas = await _context.Pruebas
-                .Include(p => p.Cateter)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (pruebas == null)
-            {
-                return NotFound();
-            }
+            var prueba = await _pruebaService.ObtenerPorIdAsync(id.Value);
+            if (prueba == null) return NotFound();
 
-            return View(pruebas);
+            return View(prueba);
         }
 
-        // GET: Pruebas/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CateterId"] = new SelectList(_context.Cateter, "Id", "Id");
+            ViewData["CateterId"] = new SelectList(await _cateterService.ObtenerTodosAsync(), "Id", "Id");
             return View();
         }
 
-        // POST: Pruebas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Descripcion,Fecha,PresionBalloon,InspeccionTactil,RupturaBalloon,Desinflado,Estado,CateterId")] Pruebas pruebas)
+        public async Task<IActionResult> Create([Bind("Id,Descripcion,Fecha,PresionBalloon,InspeccionTactil,RupturaBalloon,Desinflado,Estado,CateterId")] Pruebas prueba)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pruebas);
-                await _context.SaveChangesAsync();
+                await _pruebaService.CrearAsync(prueba);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CateterId"] = new SelectList(_context.Cateter, "Id", "Id", pruebas.CateterId);
-            return View(pruebas);
+
+            ViewData["CateterId"] = new SelectList(await _cateterService.ObtenerTodosAsync(), "Id", "Id", prueba.CateterId);
+            return View(prueba);
         }
 
-
-        // GET: Pruebas/Create
-        public IActionResult CreateTec()
+        public async Task<IActionResult> CreateTec()
         {
-            ViewData["CateterId"] = new SelectList(_context.Cateter, "Id", "Id");
+            ViewData["CateterId"] = new SelectList(await _cateterService.ObtenerTodosAsync(), "Id", "Id");
             return View();
         }
 
-        // POST: Pruebas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateTec([Bind("Id,Descripcion,Fecha,PresionBalloon,InspeccionTactil,RupturaBalloon,Desinflado,Estado,CateterId")] Pruebas pruebas)
+        public async Task<IActionResult> CreateTec([Bind("Id,Descripcion,Fecha,PresionBalloon,InspeccionTactil,RupturaBalloon,Desinflado,Estado,CateterId")] Pruebas prueba)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pruebas);
-                await _context.SaveChangesAsync();
+                await _pruebaService.CrearAsync(prueba);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CateterId"] = new SelectList(_context.Cateter, "Id", "Id", pruebas.CateterId);
-            return View(pruebas);
+
+            ViewData["CateterId"] = new SelectList(await _cateterService.ObtenerTodosAsync(), "Id", "Id", prueba.CateterId);
+            return View(prueba);
         }
 
-        // GET: Pruebas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var pruebas = await _context.Pruebas.FindAsync(id);
-            if (pruebas == null)
-            {
-                return NotFound();
-            }
-            ViewData["CateterId"] = new SelectList(_context.Cateter, "Id", "Id", pruebas.CateterId);
-            return View(pruebas);
+            var prueba = await _pruebaService.ObtenerPorIdSimpleAsync(id.Value);
+            if (prueba == null) return NotFound();
+
+            ViewData["CateterId"] = new SelectList(await _cateterService.ObtenerTodosAsync(), "Id", "Id", prueba.CateterId);
+            return View(prueba);
         }
 
-        // POST: Pruebas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion,Fecha,PresionBalloon,InspeccionTactil,RupturaBalloon,Desinflado,Estado,CateterId")] Pruebas pruebas)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion,Fecha,PresionBalloon,InspeccionTactil,RupturaBalloon,Desinflado,Estado,CateterId")] Pruebas prueba)
         {
-            if (id != pruebas.Id)
-            {
-                return NotFound();
-            }
+            if (id != prueba.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(pruebas);
-                    await _context.SaveChangesAsync();
+                    await _pruebaService.ActualizarAsync(prueba);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch
                 {
-                    if (!PruebasExists(pruebas.Id))
-                    {
+                    if (!await _pruebaService.ExisteAsync(prueba.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CateterId"] = new SelectList(_context.Cateter, "Id", "Id", pruebas.CateterId);
-            return View(pruebas);
+
+            ViewData["CateterId"] = new SelectList(await _cateterService.ObtenerTodosAsync(), "Id", "Id", prueba.CateterId);
+            return View(prueba);
         }
 
-
-        // GET: Pruebas/Edit/5
         public async Task<IActionResult> EditTec(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var pruebas = await _context.Pruebas.FindAsync(id);
-            if (pruebas == null)
-            {
-                return NotFound();
-            }
-            ViewData["CateterId"] = new SelectList(_context.Cateter, "Id", "Id", pruebas.CateterId);
-            return View(pruebas);
+            var prueba = await _pruebaService.ObtenerPorIdSimpleAsync(id.Value);
+            if (prueba == null) return NotFound();
+
+            ViewData["CateterId"] = new SelectList(await _cateterService.ObtenerTodosAsync(), "Id", "Id", prueba.CateterId);
+            return View(prueba);
         }
 
-        // POST: Pruebas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditTec(int id, [Bind("Id,Descripcion,Fecha,PresionBalloon,InspeccionTactil,RupturaBalloon,Desinflado,Estado,CateterId")] Pruebas pruebas)
+        public async Task<IActionResult> EditTec(int id, [Bind("Id,Descripcion,Fecha,PresionBalloon,InspeccionTactil,RupturaBalloon,Desinflado,Estado,CateterId")] Pruebas prueba)
         {
-            if (id != pruebas.Id)
-            {
-                return NotFound();
-            }
+            if (id != prueba.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(pruebas);
-                    await _context.SaveChangesAsync();
+                    await _pruebaService.ActualizarAsync(prueba);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch
                 {
-                    if (!PruebasExists(pruebas.Id))
-                    {
+                    if (!await _pruebaService.ExisteAsync(prueba.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CateterId"] = new SelectList(_context.Cateter, "Id", "Id", pruebas.CateterId);
-            return View(pruebas);
+
+            ViewData["CateterId"] = new SelectList(await _cateterService.ObtenerTodosAsync(), "Id", "Id", prueba.CateterId);
+            return View(prueba);
         }
 
-
-
-        // GET: Pruebas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var pruebas = await _context.Pruebas
-                .Include(p => p.Cateter)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (pruebas == null)
-            {
-                return NotFound();
-            }
+            var prueba = await _pruebaService.ObtenerPorIdAsync(id.Value);
+            if (prueba == null) return NotFound();
 
-            return View(pruebas);
+            return View(prueba);
         }
 
-        // POST: Pruebas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pruebas = await _context.Pruebas.FindAsync(id);
-            if (pruebas != null)
-            {
-                _context.Pruebas.Remove(pruebas);
-            }
-
-            await _context.SaveChangesAsync();
+            await _pruebaService.EliminarAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool PruebasExists(int id)
-        {
-            return _context.Pruebas.Any(e => e.Id == id);
         }
     }
 }
