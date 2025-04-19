@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<h2><i class="fas fa-users text-primary"></i> Gestión de Usuarios</h2>
+
+<table class="table table-rounded">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Usuario</th>
+            <th>Confirmado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.UserName</td>
+                <td>@(user.EmailConfirmed ? "Sí" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>

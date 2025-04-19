@@ -1,41 +1,37 @@
 ﻿@model IEnumerable<Proyecto.Models.Proveedores>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Proveedores";
 }
 
-<h1>Index</h1>
+<h2><i class="fas fa-handshake text-primary"></i> Proveedores</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-create">
+        <i class="fas fa-plus-circle"></i> Nuevo Proveedor
+    </a>
 </p>
-<table class="table">
+
+<table class="table table-rounded">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contacto)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Contacto)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contacto)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Contacto)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="action-btn">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="action-btn">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="action-btn">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

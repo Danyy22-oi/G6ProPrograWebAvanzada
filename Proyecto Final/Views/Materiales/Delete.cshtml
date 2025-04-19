@@ -1,39 +1,38 @@
 ﻿@model Proyecto.Models.Materiales
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar Material";
 }
 
-<h1>Delete</h1>
+<div class="form-wrapper">
+    <h2 class="text-center text-danger mb-4">
+        <i class="fas fa-trash-alt"></i> Eliminar Material
+    </h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Materiales</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cantidad)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <p class="text-center fs-5">¿Estás seguro de que deseas eliminar este registro?</p>
+
+    <div class="form-card">
+        <dl class="row">
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nombre)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Nombre)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Cantidad)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Cantidad)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Descripcion)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Descripcion)</dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Eliminar
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
