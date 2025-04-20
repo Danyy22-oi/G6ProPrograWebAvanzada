@@ -17,26 +17,6 @@
             margin: 0;
         }
 
-        .hero-nosotros {
-            position: relative;
-            height: 380px;
-            background: linear-gradient(rgba(0, 60, 113, 0.4), rgba(0, 60, 113, 0.4)), url("/images/nosotros-hero.png") center/cover no-repeat;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-        }
-
-
-            .hero-nosotros h1 {
-                font-size: 3rem;
-                background-color: rgba(0, 0, 0, 0.5);
-                padding: 15px 30px;
-                border-radius: 8px;
-            }
-
         .section-container {
             max-width: 1100px;
             margin: 60px auto;
@@ -106,14 +86,50 @@
             margin-top: 50px;
             font-size: 14px;
         }
+
+        .intro-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+            .intro-section img {
+                width: 45%;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+        .intro-text {
+            width: 55%;
+        }
+
+            .intro-text h1 {
+                color: #003c71;
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+
+            .intro-text p {
+                color: #555;
+                font-size: 1.1rem;
+                line-height: 1.7;
+            }
     </style>
 </head>
 <body>
-    <div class="hero-nosotros">
-        <h1>Nuestra Historia</h1>
-    </div>
-
     <div class="section-container">
+        <div class="row-section reverse">
+            <img src="/images/nosotros-hero.png" alt="Equipo médico en quirófano" />
+            <div class="text-block">
+                <h2>Nuestra Historia</h2>
+                <p>Desde nuestros inicios, en MedImplants nos hemos comprometido con la innovación y la calidad en el ámbito médico. Lo que comenzó como una pequeña iniciativa de distribución local ha evolucionado hasta convertirse en una empresa reconocida en todo Centroamérica. Este crecimiento ha sido impulsado por nuestra pasión por salvar vidas y brindar soluciones reales a los profesionales de la salud.</p>
+            </div>
+        </div>
+
         <div class="row-section">
             <img src="/images/equipo-medimplants.png" alt="Fundador MedImplants" />
             <div class="text-block">

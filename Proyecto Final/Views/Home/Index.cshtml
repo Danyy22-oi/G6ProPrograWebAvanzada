@@ -17,29 +17,33 @@
             margin: 0;
         }
 
-        .hero-logo {
+        .intro-banner {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 100px 20px 40px;
-            background: #e9f4ff;
+            gap: 40px;
+            padding: 80px 40px;
+            background-color: #ffffff;
         }
 
-            .hero-logo img {
-                width: 140px;
+            .intro-banner img {
+                width: 180px;
                 height: auto;
-                margin-bottom: 20px;
             }
 
-            .hero-logo h1 {
-                font-size: 2.5rem;
+        .intro-text {
+            max-width: 600px;
+        }
+
+            .intro-text h1 {
+                font-size: 2.8rem;
                 color: #003c71;
-                margin-bottom: 5px;
+                margin-bottom: 10px;
             }
 
-            .hero-logo p {
-                color: #4c6881;
+            .intro-text p {
+                color: #555;
+                font-size: 1.1rem;
             }
 
         .card {
@@ -65,6 +69,9 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
         }
 
             .btn-primary:hover {
@@ -85,11 +92,13 @@
     </style>
 </head>
 <body>
-    <div class="hero-logo">
+    <section class="intro-banner">
         <img src="~/images/logo-medimplants.png" alt="MedImplants Logo" />
-        <h1>MedImplants</h1>
-        <p>Soluciones médicas de alta calidad</p>
-    </div>
+        <div class="intro-text">
+            <h1>MedImplants</h1>
+            <p>Soluciones médicas de alta calidad para hospitales, clínicas y profesionales de la salud en toda Centroamérica.</p>
+        </div>
+    </section>
 
     <section class="card">
         <h3><i class="fas fa-star"></i> Nuestros Productos Estrella</h3>
@@ -123,7 +132,7 @@
     <section class="card text-center">
         <h3><i class="fas fa-envelope-open-text"></i> ¿Deseás cotizar o colaborar?</h3>
         <p>Estamos listos para atender tus consultas y coordinar una reunión.</p>
-        <a href="#contacto" class="btn btn-primary"><i class="fas fa-phone-alt"></i> Contáctanos</a>
+        <a asp-controller="Contacto" asp-action="Index" class="btn btn-primary"><i class="fas fa-phone-alt"></i> Contáctanos</a>
     </section>
 
     <footer>
