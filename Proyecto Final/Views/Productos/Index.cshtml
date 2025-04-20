@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Catálogo de Productos";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - MedImplants</title>
+    <link rel="stylesheet" href="~/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+        }
+
+        .hero-banner {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background-color: #f5f7fa;
+        }
+
+            .hero-banner h1 {
+                font-size: 2.6rem;
+                color: #003c71;
+                margin-bottom: 10px;
+            }
+
+            .hero-banner p {
+                font-size: 1.1rem;
+                max-width: 720px;
+                margin: 0 auto;
+                color: #444;
+            }
+
+        .catalog-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .product-horizontal {
+            display: flex;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+            .product-horizontal:hover {
+                transform: scale(1.01);
+            }
+
+            .product-horizontal img {
+                width: 280px;
+                height: auto;
+                object-fit: cover;
+            }
+
+        .product-info {
+            padding: 25px 30px;
+        }
+
+            .product-info h3 {
+                color: #003c71;
+                margin-bottom: 15px;
+            }
+
+            .product-info p {
+                font-size: 0.97rem;
+                color: #444;
+                margin-bottom: 10px;
+            }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #e3f2fd;
+            margin-top: 60px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-banner">
+        <h1>Catálogo de Productos Médicos</h1>
+        <p>Explora nuestra selección de productos médicos de alta calidad, desarrollados para optimizar la seguridad del paciente y facilitar el trabajo clínico.</p>
+    </div>
+
+    <div class="catalog-container">
+        <div class="product-horizontal">
+            <img src="~/images/producto-cateter.png" alt="Catéter Venoso Central" />
+            <div class="product-info">
+                <h3>Catéter Venoso Central</h3>
+                <p>El catéter venoso central permite administrar medicamentos, soluciones intravenosas y nutrientes directamente al torrente sanguíneo. Es fundamental en cuidados intensivos y postoperatorios críticos.</p>
+                <p>Vida útil: 7 a 14 días. Calibres: 4.0Fr a 8.5Fr. Material: poliuretano flexible y biocompatible con marcas centimétricas. Posee conexiones Luer Lock para mayor seguridad.</p>
+            </div>
+        </div>
+
+        <div class="product-horizontal">
+            <img src="~/images/producto-hemodialisis.png" alt="Catéter de Hemodiálisis" />
+            <div class="product-info">
+                <h3>Catéter de Hemodiálisis</h3>
+                <p>Dispositivo esencial para pacientes en tratamiento renal sustitutivo. Proporciona acceso al sistema venoso para realizar hemodiálisis eficiente.</p>
+                <p>Diseñado para uso temporal o prolongado. Calibres: 8Fr a 14Fr. Compatible con conexiones esténdar para bombas de diálisis. Longitudes disponibles de 15 a 30 cm.</p>
+            </div>
+        </div>
+
+        <div class="product-horizontal">
+            <img src="~/images/producto-jeringas.png" alt="Jeringas Estériles" />
+            <div class="product-info">
+                <h3>Jeringas Estériles</h3>
+                <p>Herramienta de uso general en hospitales y consultorios. Presentaciones de 1ml, 3ml, 5ml, 10ml y 20ml con o sin aguja integrada. Graduación precisa y suave deslizamiento del émbolo.</p>
+                <p>Uso: administración de vacunas, insulina, medicamentos intravenosos. Agujas disponibles en calibres 22G a 30G según la necesidad clínica.</p>
+            </div>
+        </div>
+
+        <div class="product-horizontal">
+            <img src="~/images/producto-infusion.png" alt="Sistemas de Infusión Intravenosa" />
+            <div class="product-info">
+                <h3>Sistemas de Infusión Intravenosa</h3>
+                <p>Compuestos por tubos flexibles, cámaras de goteo, reguladores de flujo, y conectores universales para facilitar la administración de fluidos a diferentes velocidades.</p>
+                <p>Modelos para adultos y pediátricos. Compatibilidad con bombas de infusión electrónica. Empaque estéril individual. Libre de látex y materiales tóxicos.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 MedImplants S.A. | Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>

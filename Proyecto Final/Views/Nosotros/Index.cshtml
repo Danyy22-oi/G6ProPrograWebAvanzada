@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "Nosotros";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - MedImplants</title>
+    <link rel="stylesheet" href="~/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+        }
+
+        .hero-nosotros {
+            position: relative;
+            height: 380px;
+            background: linear-gradient(rgba(0, 60, 113, 0.4), rgba(0, 60, 113, 0.4)), url("/images/nosotros-hero.png") center/cover no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+
+            .hero-nosotros h1 {
+                font-size: 3rem;
+                background-color: rgba(0, 0, 0, 0.5);
+                padding: 15px 30px;
+                border-radius: 8px;
+            }
+
+        .section-container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .row-section {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+            .row-section img {
+                width: 45%;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            .row-section.reverse {
+                flex-direction: row-reverse;
+            }
+
+        .text-block {
+            width: 55%;
+        }
+
+            .text-block h2 {
+                color: #003c71;
+                margin-bottom: 15px;
+            }
+
+            .text-block p {
+                color: #444;
+                line-height: 1.6;
+            }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+            .testimonial-card img {
+                width: 100%;
+                border-radius: 8px;
+                margin-bottom: 15px;
+            }
+
+            .testimonial-card p {
+                font-style: italic;
+                color: #555;
+            }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #e3f2fd;
+            margin-top: 50px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-nosotros">
+        <h1>Nuestra Historia</h1>
+    </div>
+
+    <div class="section-container">
+        <div class="row-section">
+            <img src="/images/equipo-medimplants.png" alt="Fundador MedImplants" />
+            <div class="text-block">
+                <h2>15 Años Innovando la Salud</h2>
+                <p>MedImplants nació con la misión de transformar la atención médica a través de productos seguros, duraderos y certificados. Fundada por el Dr. Luis Cordero, nuestra empresa ha llevado soluciones quirúrgicas y hospitalarias a clínicas de toda Costa Rica y Centroamérica, estableciendo estándares de calidad en cada entrega.</p>
+            </div>
+        </div>
+
+        <div class="row-section reverse">
+            <img src="/images/certificaciones-premios.png" alt="Certificados y Premios" />
+            <div class="text-block">
+                <h2>Certificaciones y Reconocimientos</h2>
+                <p>Somos orgullosamente portadores de certificados ISO 13485, cumplimiento FDA, y reconocimiento de instituciones como el Hospital Calderón Guardia, CIMA, Clínica Bíblica, entre otros. Nuestra excelencia nos ha posicionado como un proveedor líder en tecnología médica.</p>
+            </div>
+        </div>
+
+        <div class="row-section">
+            <div class="text-block">
+                <h2>Aliados de Confianza</h2>
+                <p>Actualmente trabajamos con más de 30 centros médicos en Costa Rica, Panamá y Nicaragua. Nuestro compromiso es ser parte activa del bienestar de cada paciente, entregando productos que salvan vidas.</p>
+            </div>
+        </div>
+
+        <h2 class="text-center mb-4" style="color:#003c71;">Testimonios de Pacientes</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <img src="/images/Paciente1.png" alt="Paciente Satisfecho 1" />
+                <p>“Gracias a MedImplants y su equipo de soporte, mi recuperación postoperatoria fue segura y sin complicaciones.”</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="/images/Paciente2.png" alt="Paciente Satisfecho 2" />
+                <p>“Recomiendo completamente sus productos, se nota que están pensados para brindar tranquilidad y calidad.”</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="/images/Paciente3.png" alt="Paciente Satisfecho 3" />
+                <p>“En la clínica hemos confiado en MedImplants durante años y nunca nos han fallado.”</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 MedImplants S.A. | Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>

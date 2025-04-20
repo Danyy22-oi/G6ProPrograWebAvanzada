@@ -11,57 +11,85 @@
     <link rel="stylesheet" href="~/css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        .icon-card {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
         }
 
-        .icon-card i {
-            font-size: 28px;
-            color: #007acc;
+        .hero-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 40px;
+            background: #e9f4ff;
         }
+
+            .hero-logo img {
+                width: 140px;
+                height: auto;
+                margin-bottom: 20px;
+            }
+
+            .hero-logo h1 {
+                font-size: 2.5rem;
+                color: #003c71;
+                margin-bottom: 5px;
+            }
+
+            .hero-logo p {
+                color: #4c6881;
+            }
+
+        .card {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 25px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+            .card h3 {
+                margin-bottom: 15px;
+                color: #003c71;
+            }
 
         .btn-primary {
             background-color: #007acc;
             color: #fff;
-            padding: 12px 25px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
-            transition: 0.3s ease-in-out;
+            transition: 0.3s;
         }
 
-        .btn-primary:hover {
-            background-color: #005c99;
+            .btn-primary:hover {
+                background-color: #005c99;
+            }
+
+        .text-center {
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #e3f2fd;
+            margin-top: 50px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1><i class="fas fa-heartbeat"></i> MedImplants</h1>
+    <div class="hero-logo">
+        <img src="~/images/logo-medimplants.png" alt="MedImplants Logo" />
+        <h1>MedImplants</h1>
         <p>Soluciones médicas de alta calidad</p>
-    </header>
-
-    <nav>
-        <a href="#"><i class="fas fa-home"></i> Inicio</a>
-        <a href="#"><i class="fas fa-box-medical"></i> Productos</a>
-        <a href="#"><i class="fas fa-users"></i> Nosotros</a>
-        <a href="#"><i class="fas fa-envelope"></i> Contacto</a>
-    </nav>
-
-    <section>
-        <div class="icon-card">
-            <i class="fas fa-hospital-user"></i>
-            <div>
-                <h2>Bienvenidos a MedImplants</h2>
-                <p>Ofrecemos implementos médicos de alta precisión como catéteres, cánulas y soluciones quirúrgicas para clínicas y hospitales.</p>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <section class="card">
         <h3><i class="fas fa-star"></i> Nuestros Productos Estrella</h3>
@@ -71,17 +99,35 @@
             <li><i class="fas fa-briefcase-medical"></i> Jeringas estériles</li>
             <li><i class="fas fa-pump-medical"></i> Sistemas de infusión intravenosa</li>
         </ul>
+        <a asp-controller="Productos" asp-action="Index" class="btn btn-primary w-100 mt-3">Ver más</a>
     </section>
 
     <section class="card">
-        <h3><i class="fas fa-check-circle"></i> ¿Por qué elegirnos?</h3>
-        <p>Más de 15 años proveyendo a centros médicos en Costa Rica. Certificaciones internacionales y atención personalizada.</p>
-        <button class="btn-primary"><i class="fas fa-phone-volume"></i> Contáctanos</button>
+        <h3><i class="fas fa-user-md"></i> Sobre MedImplants</h3>
+        <p>
+            Somos una empresa costarricense con más de 15 años de experiencia ofreciendo implementos médicos certificados de alta calidad. Nos enfocamos en soluciones para clínicas, hospitales y profesionales de la salud.
+        </p>
+        <a asp-controller="Nosotros" asp-action="Index" class="btn btn-primary w-100 mt-3">Conócenos</a>
+    </section>
+
+    <section class="card">
+        <h3><i class="fas fa-thumbs-up"></i> Confían en nosotros</h3>
+        <p>Más de 30 instituciones de salud en Costa Rica y Centroamérica usan nuestros productos con confianza.</p>
+        <ul>
+            <li><i class="fas fa-check-circle"></i> Hospital México</li>
+            <li><i class="fas fa-check-circle"></i> Clínica Bíblica</li>
+            <li><i class="fas fa-check-circle"></i> CIMA San José</li>
+        </ul>
+    </section>
+
+    <section class="card text-center">
+        <h3><i class="fas fa-envelope-open-text"></i> ¿Deseás cotizar o colaborar?</h3>
+        <p>Estamos listos para atender tus consultas y coordinar una reunión.</p>
+        <a href="#contacto" class="btn btn-primary"><i class="fas fa-phone-alt"></i> Contáctanos</a>
     </section>
 
     <footer>
         <p>&copy; 2025 MedImplants S.A. | Todos los derechos reservados</p>
     </footer>
-
 </body>
 </html>
