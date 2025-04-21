@@ -34,6 +34,8 @@ builder.Services.AddScoped<IProveedorService, ProveedorService>();
 builder.Services.AddScoped<IMaterialesService, MaterialesService>();
 builder.Services.AddScoped<IEstadoEquiposService, EstadoEquiposService>();
 builder.Services.AddScoped<IEstadoEquiposService, EstadoEquiposService>();
+builder.Services.AddScoped<IEquiposService, EquiposService>();
+
 
 
 //Aqui se configuran las rutas de acceso:
@@ -74,6 +76,10 @@ app.UseAuthorization();
 //app.MapControllerRoute( 
 //name: "default",
 //pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
