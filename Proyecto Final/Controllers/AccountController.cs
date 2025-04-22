@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Proyecto_Final.Models;
 using System.Linq;
@@ -76,6 +77,13 @@ namespace Proyecto_Final.Controllers
             }
             return RedirectToAction("Index", "Home"); // Si no tiene roles, redirigir al inicio
         }
+
+        [AllowAnonymous]
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
+
 
         // Acción para cerrar sesión
         public async Task<IActionResult> Logout()
