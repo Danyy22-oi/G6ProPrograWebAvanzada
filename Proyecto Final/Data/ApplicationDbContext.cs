@@ -6,7 +6,7 @@ using Proyecto_Final.Models;
 
 namespace Proyecto_Final.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

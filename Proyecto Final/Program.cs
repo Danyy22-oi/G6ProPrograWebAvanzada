@@ -1,3 +1,98 @@
+//using Microsoft.AspNetCore.Identity;
+//using Microsoft.EntityFrameworkCore;
+//using Proyecto.Services.Interfaces;
+//using Proyecto.Services;
+//using Proyecto_Final.Data;
+//using Proyecto_Final.Models;
+
+//var builder = WebApplication.CreateBuilder(args);
+
+//// Configuraracion de la cadena de conexi锟絥
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+//    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(connectionString));
+
+//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+//// Aqui se agrega Identity con roles habilitados
+//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+//    .AddRoles<IdentityRole>() // Esto permite roles
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+//builder.Services.AddControllersWithViews();
+
+////inyeccion de dependencias 
+//builder.Services.AddScoped<IAlarmaService, AlarmaService>();
+//builder.Services.AddScoped<ICateterService, CateterService>();
+//builder.Services.AddScoped<ICorreccionesService, CorreccionesService>();
+//builder.Services.AddScoped<IDepartamentoService, DepartamentoService>();
+//builder.Services.AddScoped<IPruebaService, PruebaService>();
+//builder.Services.AddScoped<ISuministrosService, SuministrosService>();
+//builder.Services.AddScoped<IProveedorService, ProveedorService>();
+//builder.Services.AddScoped<IMaterialesService, MaterialesService>();
+//builder.Services.AddScoped<IEstadoEquiposService, EstadoEquiposService>();
+//builder.Services.AddScoped<IEstadoEquiposService, EstadoEquiposService>();
+//builder.Services.AddScoped<IEquiposService, EquiposService>();
+
+
+
+////Aqui se configuran las rutas de acceso:
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+//    options.LoginPath = "/Account/Login";
+//    options.AccessDeniedPath = "/Account/AccessDenied";
+//});
+
+//var app = builder.Build();
+
+
+////Se llama a IdentityInitializer.SeedRolesAndAdmin
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    await IdentityInitializer.SeedRolesAndAdmin(services);
+//}
+
+
+//// Se configura el pipeline de la aplicaci锟絥
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseMigrationsEndPoint();
+//}
+//else
+//{
+//    app.UseExceptionHandler("/Home/Error");
+//    app.UseHsts();
+//}
+
+//app.UseHttpsRedirection();
+//app.UseStaticFiles();
+//app.UseRouting();
+//app.UseAuthentication(); // Asegurar autenticaci锟絥
+//app.UseAuthorization();
+
+////app.MapControllerRoute( 
+////name: "default",
+////pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Account}/{action=Login}/{id?}");
+
+
+
+
+//app.MapRazorPages();
+
+//app.Run();
+
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Proyecto.Services.Interfaces;
@@ -7,23 +102,21 @@ using Proyecto_Final.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuraracion de la cadena de conexi髇
+// 馃數 Configuraci贸n de cadena de conexi贸n
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// Aqui se agrega Identity con roles habilitados
+// 馃數 Configuraci贸n de Identity con Roles
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddRoles<IdentityRole>() // Esto permite roles
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddControllersWithViews();
 
-//inyeccion de dependencias 
+// 馃數 Inyecci贸n de dependencias (servicios)
 builder.Services.AddScoped<IAlarmaService, AlarmaService>();
 builder.Services.AddScoped<ICateterService, CateterService>();
 builder.Services.AddScoped<ICorreccionesService, CorreccionesService>();
@@ -33,30 +126,28 @@ builder.Services.AddScoped<ISuministrosService, SuministrosService>();
 builder.Services.AddScoped<IProveedorService, ProveedorService>();
 builder.Services.AddScoped<IMaterialesService, MaterialesService>();
 builder.Services.AddScoped<IEstadoEquiposService, EstadoEquiposService>();
-builder.Services.AddScoped<IEstadoEquiposService, EstadoEquiposService>();
 builder.Services.AddScoped<IEquiposService, EquiposService>();
 
-
-
-//Aqui se configuran las rutas de acceso:
+// 馃數 Configuraci贸n de Cookies (Login/AccessDenied)
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
+// 馃數 Agregamos controladores y vistas
+builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
 
-
-//Se llama a IdentityInitializer.SeedRolesAndAdmin
+// 馃數 Inicializar Roles y Usuario Admin
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     await IdentityInitializer.SeedRolesAndAdmin(services);
 }
 
-
-// Se configura el pipeline de la aplicaci髇
+// 馃數 Configuraci贸n del Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -69,25 +160,18 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
-app.UseAuthentication(); // Asegurar autenticaci髇
+
+app.UseAuthentication();
 app.UseAuthorization();
 
-//app.MapControllerRoute( 
-//name: "default",
-//pattern: "{controller=Home}/{action=Index}/{id?}");
-
+// 馃數 Configuraci贸n de Rutas
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
-
-
-
-
+// 馃數 Rutas para Razor Pages (Register, Login, etc.)
 app.MapRazorPages();
 
 app.Run();

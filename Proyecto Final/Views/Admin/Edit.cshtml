@@ -1,0 +1,51 @@
+﻿@model Proyecto_Final.Models.UserRoleEditViewModel
+
+@{
+    ViewData["Title"] = "Editar Usuario";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-dark mb-4">
+        <i class="fas fa-edit"></i> Editar Usuario
+    </h2>
+
+    <form asp-action="Edit" method="post">
+        <div class="form-group mb-3">
+            <label for="UserName">Nombre de Usuario</label>
+            <input type="text" id="UserName" name="UserName" class="form-control" value="@Model.UserName" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="Email">Correo Electrónico</label>
+            <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="RoleName">Rol</label>
+            <input type="text" id="RoleName" name="RoleName" class="form-control" value="@Model.RoleName" readonly />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="Departamentos">Departamento</label>
+            <input type="text" id="Departamentos" name="Departamentos" class="form-control" value="@Model.Departamentos" readonly />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="NewPassword">Nueva Contraseña</label>
+            <input type="password" id="NewPassword" name="NewPassword" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="ConfirmPassword">Confirmar Nueva Contraseña</label>
+            <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" />
+        </div>
+
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a asp-controller="Admin" asp-action="CRUDusers" class="btn btn-secondary ms-2">Cancelar</a>
+        </div>
+    </form>
+</div>
+
